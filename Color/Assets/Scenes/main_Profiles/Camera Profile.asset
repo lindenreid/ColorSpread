@@ -138,10 +138,10 @@ MonoBehaviour:
     value: 1
   size:
     overrideState: 1
-    value: 7
+    value: 28.33
   k:
     overrideState: 1
-    value: 8
+    value: 13.82
   p:
     overrideState: 1
     value: 1
@@ -150,7 +150,17 @@ MonoBehaviour:
     value: 15
   startTime:
     overrideState: 1
-    value: 0.80346
+    value: 10.977385
   clickLocation:
     overrideState: 1
-    value: {x: 15.694205, y: -1.3488829, z: -15.128152, w: 0}
+    value: {x: 21.242813, y: -0.18580556, z: -1.8551298, w: 0}
+  noiseTex:
+    overrideState: 1
+    value: {fileID: 2800000, guid: f56fd4d77ddc7f64bbcadd0761ce00c3, type: 3}
+    defaultState: 1
+  noiseSize:
+    overrideState: 1
+    value: 15.02
+  noiseTexScale:
+    overrideState: 1
+    value: 0.004

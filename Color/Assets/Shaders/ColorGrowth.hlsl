@@ -16,6 +16,9 @@ float _StartTime;
 float _K;
 float _P;
 float4 _Center;
+float _NoiseSize;
+float _NoiseTexScale;
+TEXTURE2D_SAMPLER2D(_NoiseTex, sampler_NoiseTex);
 // Unity properties (set in ColorSpread.cs)
 float4x4 unity_ViewToWorldMatrix;
 float4x4 unity_InverseProjectionMatrix;
@@ -28,6 +31,18 @@ struct VertexOutput {
     float4 pos : SV_POSITION;
     float2 screenPos : TEXCOORD0;
 };
+
+// Returns 1 if min <= t <= max, 0 otherwise
+float between (float min, float max, float t) {
+    return step(min, t) * step(t, max);
+}
+
+// Blends colors a and b based on t's position between min and max
+// Returns black if t is not inside min & max
+float3 BlendInRange (float t, float min, float max, float3 a, float3 b) {
+    float blend = (t - min) / (max - min);
+    return between(min, max, t) * smoothstep(a, b, blend);
+}
 
 float3 GetWorldFromViewPosition (VertexOutput i) {
     // get view space position
@@ -82,6 +97,17 @@ float4 Frag(VertexOutput i) : SV_Target
     // calculate radius based on animation starting time & current time
     float timeElapsed = _Time.y - _StartTime;
     float currentRadius = min(timeElapsed * _GrowthSpeed, _MaxSize);
+
+    // get world-space sample position for noise texture
+    float2 worldUV = worldPos.xz;
+    worldUV *= _NoiseTexScale;
+
+    // add noise to radius
+    float noise = SAMPLE_TEXTURE2D(_NoiseTex, sampler_NoiseTex, worldUV);
+    currentRadius -= noise * _NoiseSize;
+
+    // clamp radius so we don't get weird artifacts
+    currentRadius = clamp(currentRadius, 0, _MaxSize);
 
     // check if distance is inside bounds of max radius
     // choose greyscale if outside, full color if inside

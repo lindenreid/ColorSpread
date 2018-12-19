@@ -14,6 +14,9 @@ public sealed class ColorSpread : PostProcessEffectSettings
     public FloatParameter growthSpeed = new FloatParameter { value = 1.0f };
     public FloatParameter startTime = new FloatParameter { value = 0.0f };
     public Vector4Parameter clickLocation = new Vector4Parameter { value = new Vector4(0,0,0,0) };
+    public TextureParameter noiseTex = new TextureParameter { value = null };
+    public FloatParameter noiseSize = new FloatParameter { value = 1.0f };
+    public FloatParameter noiseTexScale = new FloatParameter { value = 1.0f };
 }
  
 public sealed class ColorSpreadRenderer : PostProcessEffectRenderer<ColorSpread>
@@ -33,6 +36,10 @@ public sealed class ColorSpreadRenderer : PostProcessEffectRenderer<ColorSpread>
         sheet.properties.SetMatrix("unity_ViewToWorldMatrix", context.camera.cameraToWorldMatrix);
         sheet.properties.SetMatrix("unity_InverseProjectionMatrix", projectionMatrix.inverse);
         sheet.properties.SetVector("_Center", settings.clickLocation);
+        sheet.properties.SetTexture("_NoiseTex", settings.noiseTex);
+        sheet.properties.SetFloat("_NoiseSize", settings.noiseSize);
+        sheet.properties.SetFloat("_NoiseTexScale", settings.noiseTexScale);
+
         context.command.BlitFullscreenTriangle(context.source, context.destination, sheet, 0);
     }
 }
