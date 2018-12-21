@@ -138,29 +138,44 @@ MonoBehaviour:
     value: 1
   size:
     overrideState: 1
-    value: 28.33
-  k:
+    value: 14.2
+  k_color:
     overrideState: 1
-    value: 13.82
-  p:
+    value: 15
+  p_color:
     overrideState: 1
     value: 1
   growthSpeed:
     overrideState: 1
-    value: 15
+    value: 10
   startTime:
     overrideState: 1
-    value: 10.977385
+    value: 1228.7596
   clickLocation:
     overrideState: 1
-    value: {x: 21.242813, y: -0.18580556, z: -1.8551298, w: 0}
+    value: {x: 22.095175, y: -0.6525898, z: -7.228528, w: 0}
   noiseTex:
     overrideState: 1
     value: {fileID: 2800000, guid: f56fd4d77ddc7f64bbcadd0761ce00c3, type: 3}
     defaultState: 1
   noiseSize:
     overrideState: 1
-    value: 15.02
+    value: 10
   noiseTexScale:
     overrideState: 1
     value: 0.004
+  startColor:
+    overrideState: 1
+    value: {r: 0, g: 0, b: 0, a: 1}
+  endColor:
+    overrideState: 1
+    value: {r: 0.4952259, g: 0, b: 1, a: 1}
+  wiggleStrength:
+    overrideState: 1
+    value: 0.05
+  k_wiggle:
+    overrideState: 1
+    value: 5
+  p_wiggle:
+    overrideState: 1
+    value: 1
