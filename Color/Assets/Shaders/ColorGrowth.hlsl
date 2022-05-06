@@ -94,13 +94,10 @@ float4 Frag(VertexOutput i) : SV_Target
     //float4 depthColor = float4(worldPos, 1.0); // TEST
 
     // calculate radius based on animation starting time & current time
-    /*
     float timeElapsed = _Time.y - _StartTime;
     float effectRadius = min(timeElapsed * _GrowthSpeed, _MaxSize);
-    */
 
     // get world-space sample position for noise texture
-    /*
     float2 worldUV = worldPos.xz;
     worldUV *= _NoiseTexScale;
 
@@ -110,13 +107,11 @@ float4 Frag(VertexOutput i) : SV_Target
 
     // clamp radius so we don't get weird artifacts
     currentRadius = clamp(currentRadius, 0, _MaxSize);
-    */
 
     // check if distance is inside bounds of max radius
     // choose greyscale if outside, full color if inside
     float dist = distance(_Center, worldPos);
-    //float blend = Blend(0, currentRadius, dist, _k_color, _p_color);
-    float blend = dist >= _MaxSize;
+    float blend = Blend(0, currentRadius, dist, _k_color, _p_color);
     
     //float useColor = step(dist, currentRadius);
     //float useColor = smoothstep(currentRadius, 0, dist);
@@ -124,14 +119,11 @@ float4 Frag(VertexOutput i) : SV_Target
 
     // wiggle screen UV sample position based on noise sample
     // modulate wiggle strength based on radius
-    /*
     float wiggleAmt = 1.0 - Blend(0, _MaxSize, effectRadius, _k_wiggle, _p_wiggle);
     float wiggleEdge = Blend(0, currentRadius, dist, _k_wiggle, _p_wiggle);
     _WiggleStrength *= wiggleAmt * wiggleEdge * between(0, currentRadius, dist);
     float noiseWiggle = lerp(-1.0, 1.0, noise);
     float2 screenUV = i.screenPos + (_WiggleStrength * noiseWiggle);
-    */
-    float2 screenUV = i.screenPos;
 
     // regular color 
     float4 fullColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, screenUV);
@@ -142,10 +134,9 @@ float4 Frag(VertexOutput i) : SV_Target
 
     float3 color = (1-blend)*fullColor + blend*greyscale;
 
-    /*
+    //float3 tintColor = BlendInRange(dist, 0, currentRadius, _StartColor, _EndColor);
     float3 tintColor = lerp(_StartColor, _EndColor, blend) * between(0, currentRadius, dist);
     color += tintColor;
-    */
     
     return float4(color, 1.0);
     //return depthColor; // TEST
